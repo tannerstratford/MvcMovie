@@ -142,6 +142,11 @@ namespace MvcMovie.Controllers
             {
                 try
                 {
+                    IQueryable<Genre> genreQuery = from g in _context.Genre
+                                                   select g;
+                    var stringGenre = Request.Form["Genre"];
+                    var Genre = genreQuery.FirstOrDefault(x => x.Name == stringGenre.ToString());
+                    movie.Genre = Genre;
                     _context.Update(movie);
                     await _context.SaveChangesAsync();
                 }
